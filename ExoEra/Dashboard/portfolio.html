@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="portfolio.css">
+    <title>Portfolio - TalentSphere</title>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <span class="logo-text">TS</span>
+                </div>
+                <h2>TalentSphere</h2>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="skills.html">
+                        <i class="fas fa-code"></i>
+                        <span>Skills</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="portfolio.html">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Portfolio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="messages.html">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="engagement.html">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Engagement</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="portfolio-container">
+                <div class="portfolio-header">
+                    <h1>My Portfolio</h1>
+                    <button class="add-project-btn" onclick="openModal()">
+                        <i class="fas fa-plus"></i>
+                        Add New Project
+                    </button>
+                </div>
+
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-th-large"></i>
+                        All Projects
+                    </button>
+                    <button class="filter-btn" data-filter="web">
+                        <i class="fas fa-globe"></i>
+                        Web Development
+                    </button>
+                    <button class="filter-btn" data-filter="mobile">
+                        <i class="fas fa-mobile-alt"></i>
+                        Mobile Apps
+                    </button>
+                    <button class="filter-btn" data-filter="design">
+                        <i class="fas fa-paint-brush"></i>
+                        UI/UX Design
+                    </button>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" title="Grid View">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- Sections will be created dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div class="modal" id="addProjectModal">
+        <div class="modal-content">
+            <h2>Add New Project</h2>
+            <form id="addProjectForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Description</label>
+                    <textarea id="projectDescription" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectImage">Project Image URL</label>
+                    <input type="url" id="projectImage" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectCategory">Category</label>
+                    <select id="projectCategory" required>
+                        <option value="web">Web Development</option>
+                        <option value="mobile">Mobile Apps</option>
+                        <option value="ui">UI/UX Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectTech">Technologies Used</label>
+                    <input type="text" id="projectTech" placeholder="e.g., HTML, CSS, JavaScript">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="submit-btn">Add Project</button>
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="portfolio.js"></script>
+</body>
+</html> 

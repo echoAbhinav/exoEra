@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="messages.css">
+    <title>Messages - TalentSphere</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Enhanced Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <span class="logo-text">TS</span>
+                </div>
+                <h2>TalentSphere</h2>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="messages.html">
+                        <i class="fas fa-comments"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="messages-container">
+                <!-- Left Sidebar -->
+                <div class="chat-list-panel">
+                    <div class="messages-header">
+                        <div class="messages-title">
+                            <h1>Messages</h1>
+                            <div class="online-status">
+                                <span class="status-indicator">Online</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search messages...">
+                    </div>
+
+                    <div class="chat-list">
+                        <div class="chat-item active">
+                            <div class="chat-avatar">
+                                <img src="assets/avatar.jpg" alt="John">
+                            </div>
+                            <div class="chat-info">
+                                <div class="chat-header-info">
+                                    <span class="chat-name">John Faustino</span>
+                                    <span class="chat-time">5.2 m</span>
+                                </div>
+                                <div class="chat-preview-wrapper">
+                                    <p class="chat-preview">AULAs PageMaker inc...</p>
+                                    <span class="unread-badge">1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- More chat items can be added here -->
+                    </div>
+                </div>
+
+                <!-- Main Chat Area -->
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <div class="user-info">
+                            <img src="assets/avatar.jpg" alt="John">
+                            <div class="user-details">
+                                <h2>John Faustino</h2>
+                                <span class="user-status">
+                                    <span class="status-dot"></span>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="https://linkedin.com/in/user-profile" target="_blank" class="linkedin-btn">
+                                <i class="fab fa-linkedin"></i>
+                                <span>View Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages">
+                        <!-- Messages will be dynamically added here -->
+                    </div>
+
+                    <div class="chat-input">
+                        <div class="input-container">
+                            <button class="attachment-btn">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input type="text" placeholder="Type a message...">
+                            <div class="input-actions">
+                                <button class="emoji-btn">
+                                    <i class="far fa-smile"></i>
+                                </button>
+                                <button class="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Chat Modal -->
+    <div class="modal" id="newChatModal">
+        <div class="modal-content">
+            <h2>New Message</h2>
+            <div class="search-contacts">
+                <input type="text" placeholder="Search contacts...">
+            </div>
+            <div class="contacts-list">
+                <!-- Contact items will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="messages.js"></script>
+</body>
+</html> 

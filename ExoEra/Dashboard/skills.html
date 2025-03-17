@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Exoera | The Ultimate Talent Discovery Platform</title>
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --secondary-color: #0071e3;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+            --shadow-color: rgba(0,0,0,0.1);
+            --header-bg: #ffffff;
+            --footer-bg: #222;
+        }
+
+        [data-theme="dark"] {
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --shadow-color: rgba(255,255,255,0.05);
+            --header-bg: #1a1a1a;
+            --footer-bg: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .theme-switch-container {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+        }
+
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider-label {
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .page-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .skills-list {
+            list-style: none;
+        }
+
+        .skills-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .skill-level {
+            width: 150px;
+            height: 10px;
+            background-color: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        .submit-skills {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #c50812;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #0062c4;
+        }
+
+        .skills-filter {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: #fff;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            margin-top: 2rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .theme-switch-container {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Exoera</a>
+            <!-- <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="talents.html">Talents</a></li>
+                    <li><a href="skills.html" class="active">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav> -->
+            <div class="theme-switch-container">
+                <label class="theme-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="slider-label">Dark Mode</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="page-title">Film Industry Skills</h1>
+        <p class="page-description">Showcase your talents and skills to stand out in the competitive film industry. Add your proficiency levels and let production teams discover your unique abilities.</p>
+
+        <div class="skills-filter">
+            <button class="filter-btn active">All Skills</button>
+            <button class="filter-btn">Acting</button>
+            <button class="filter-btn">Production</button>
+            <button class="filter-btn">Technical</button>
+            <button class="filter-btn">Creative</button>
+            <button class="filter-btn">Management</button>
+        </div>
+
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Acting Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">Method Acting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Voice Acting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Improvisation</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Characterization</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Physical Acting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Production Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">Set Design</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 65%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Location Scouting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Production Coordination</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Costume Design</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Prop Management</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Technical Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">Camera Operation</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Lighting Design</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Sound Recording</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Sound Recording</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Video Editing</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Special Effects</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Creative Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">Screenwriting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Storyboarding</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Directing</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Music Composition</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 70%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Art Direction</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Management Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">Project Management</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Team Leadership</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Budget Planning</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Scheduling</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Casting</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>Language Skills</h3>
+                <ul class="skills-list">
+                    <li>
+                        <span class="skill-name">English</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 100%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Spanish</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">French</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 60%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">Italian</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 40%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="skill-name">German</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 30%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="submit-skills">
+            <a href="add-skills.html" class="btn">Add Your Skills</a>
+            <a href="talents.html" class="btn btn-secondary">View Talents</a>
+        </div>
+    </main>
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or use device preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+        
+        // Toggle theme when switch is clicked
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const skillCategories = document.querySelectorAll('.skill-category');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.textContent.toLowerCase();
+                
+                if (filter === 'all skills') {
+                    skillCategories.forEach(category => {
+                        category.style.display = 'block';
+                    });
+                } else {
+                    skillCategories.forEach(category => {
+                        const categoryTitle = category.querySelector('h3').textContent.toLowerCase();
+                        if (categoryTitle.includes(filter)) {
+                            category.style.display = 'block';
+                        } else {
+                            category.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

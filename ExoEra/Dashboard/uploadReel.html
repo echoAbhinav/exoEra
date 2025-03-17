@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exoera - Upload Your Reel</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --text-color: #212529;
+      --primary-color: #6c63ff;
+      --secondary-color: #f5f5f5;
+      --accent-color: #ff6b6b;
+      --border-color: #dee2e6;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .dark-theme {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #8b80ff;
+      --secondary-color: #2d2d2d;
+      --accent-color: #ff8585;
+      --border-color: #444444;
+      --card-bg: #1e1e1e;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+      width: 56px;
+      height: 28px;
+    }
+
+    .theme-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--secondary-color);
+      border-radius: 28px;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: var(--card-bg);
+      border-radius: 50%;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(28px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .upload-section {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 3rem;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary-color);
+      background-color: var(--secondary-color);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #5652d9;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      display: inline-block;
+    }
+
+    footer {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background-color: var(--secondary-color);
+      border-radius: 6px;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background-color: var(--primary-color);
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .upload-area {
+        padding: 2rem 1rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">EXOERA</div>
+    <label class="theme-toggle">
+      <input type="checkbox" id="theme-switch">
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <div class="container">
+    <div class="upload-section">
+      <h1>Upload Your Talent Reel</h1>
+      <p>Showcase your skills to industry professionals and get discovered. Upload your reel to increase visibility and opportunities in the film industry.</p>
+      
+      <div class="upload-area" id="drop-area">
+        <div class="upload-icon">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <h2>Drag & Drop Your Video</h2>
+        <p>or click to browse files</p>
+        <input type="file" id="file-input" hidden accept="video/*">
+      </div>
+      
+      <div class="progress-bar" id="progress-container">
+        <div class="progress" id="progress"></div>
+      </div>
+      
+      <form id="reel-form">
+        <div class="form-group">
+          <label for="title">Reel Title</label>
+          <input type="text" id="title" name="title" placeholder="Give your reel a catchy title">
+        </div>
+        
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Describe your work, experience, and what makes you unique"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category">
+            <option value="">Select a category</option>
+            <option value="acting">Acting</option>
+            <option value="directing">Directing</option>
+            <option value="cinematography">Cinematography</option>
+            <option value="editing">Editing</option>
+            <option value="vfx">Visual Effects</option>
+            <option value="sound">Sound Design</option>
+            <option value="makeup">Makeup & Costume</option>
+            <option value="writing">Screenwriting</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="tags">Tags (separate with commas)</label>
+          <input type="text" id="tags" name="tags" placeholder="e.g., drama, comedy, action, portfolio">
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn">Upload Reel</button>
+          <button type="button" class="btn btn-secondary" style="margin-left: 10px;">Save Draft</button>
+        </div>
+      </form>
+    </div>
+    
+    <h1>Why Upload to Exoera?</h1>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+        <h3>Industry Visibility</h3>
+        <p>Get your work in front of industry professionals, casting directors, and production companies actively looking for talent.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-network-wired"></i>
+        </div>
+        <h3>Networking Opportunities</h3>
+        <p>Connect with fellow creatives and professionals, building relationships that can lead to future collaborations.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Performance Analytics</h3>
+        <p>Track who's viewing your reels, how long they watch, and which parts engage viewers the most to refine your portfolio.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-comment-alt"></i>
+        </div>
+        <h3>Professional Feedback</h3>
+        <p>Receive constructive feedback from industry professionals to help you improve and grow in your craft.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-medal"></i>
+        </div>
+        <h3>Featured Opportunities</h3>
+        <p>Top reels get featured on our homepage and in our newsletters sent to production companies and studios.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <h3>Job Opportunities</h3>
+        <p>Get matched with projects and job opportunities based on your skills, experience, and portfolio.</p>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Exoera - The Ultimate Talent Discovery Platform for the Film Industry</p>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    const themeSwitch = document.getElementById('theme-switch');
+    
+    // Check for saved theme preference
+    if (localStorage.getItem('exoera-dark-mode') === 'true') {
+      document.body.classList.add('dark-theme');
+      themeSwitch.checked = true;
+    }
+    
+    themeSwitch.addEventListener('change', function() {
+      if (this.checked) {
+        document.body.classList.add('dark-theme');
+        localStorage.setItem('exoera-dark-mode', 'true');
+      } else {
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('exoera-dark-mode', 'false');
+      }
+    });
+    
+    // Upload area functionality
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('file-input');
+    const progressContainer = document.getElementById('progress-container');
+    const progress = document.getElementById('progress');
+    
+    dropArea.addEventListener('click', () => fileInput.click());
+    
+    dropArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropArea.style.borderColor = 'var(--accent-color)';
+    });
+    
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.style.borderColor = 'var(--border-color)';
+    });
+    
+    dropArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropArea.style.borderColor = 'var(--border-color)';
+      
+      if (e.dataTransfer.files.length) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+    
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        handleFile(fileInput.files[0]);
+      }
+    });
+    
+    function handleFile(file) {
+      if (file.type.includes('video')) {
+        // Simulate upload process
+               // Simulate upload process
+               progressContainer.style.display = 'block';
+               let progressValue = 0;
+               const uploadInterval = setInterval(() => {
+                 if (progressValue < 100) {
+                   progressValue += 1;
+                   progress.style.width = `${progressValue}%`;
+                 } else {
+                   clearInterval(uploadInterval);
+                   alert('File uploaded successfully!');
+                 }
+               }, 50); // Simulating upload speed with a 50ms interval
+             } else {
+               alert('Please upload a valid video file.');
+             }
+           }
+       
+           // Form submission
+           const reelForm = document.getElementById('reel-form');
+           reelForm.addEventListener('submit', (e) => {
+             e.preventDefault();
+       
+             const title = document.getElementById('title').value;
+             const description = document.getElementById('description').value;
+             const category = document.getElementById('category').value;
+             const tags = document.getElementById('tags').value;
+       
+             // Basic form validation
+             if (!title || !description || !category) {
+               alert('Please fill in all the required fields.');
+               return;
+             }
+       
+             // Here you can add the code to send the form data to the server (e.g., using fetch or AJAX)
+             console.log('Form submitted with the following data:');
+             console.log({ title, description, category, tags });
+       
+             // Simulating a successful form submission
+             alert('Your reel has been submitted successfully!');
+           });
+       
+           // Save draft button functionality
+           const saveDraftButton = document.querySelector('.btn-secondary');
+           saveDraftButton.addEventListener('click', () => {
+             const title = document.getElementById('title').value;
+             const description = document.getElementById('description').value;
+             const category = document.getElementById('category').value;
+             const tags = document.getElementById('tags').value;
+       
+             // Save the draft data in local storage (or handle it with another method)
+             localStorage.setItem('draftTitle', title);
+             localStorage.setItem('draftDescription', description);
+             localStorage.setItem('draftCategory', category);
+             localStorage.setItem('draftTags', tags);
+       
+             alert('Draft saved successfully!');
+           });
+       
+           // Check for saved drafts and populate the form if found
+           window.addEventListener('load', () => {
+             const savedTitle = localStorage.getItem('draftTitle');
+             const savedDescription = localStorage.getItem('draftDescription');
+             const savedCategory = localStorage.getItem('draftCategory');
+             const savedTags = localStorage.getItem('draftTags');
+       
+             if (savedTitle || savedDescription || savedCategory || savedTags) {
+               document.getElementById('title').value = savedTitle || '';
+               document.getElementById('description').value = savedDescription || '';
+               document.getElementById('category').value = savedCategory || '';
+               document.getElementById('tags').value = savedTags || '';
+             }
+           });
+         </script>
+       </body>
+       </html>
+       

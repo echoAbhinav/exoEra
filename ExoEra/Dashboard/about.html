@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Exoera - The Ultimate Talent Discovery Platform</title>
+    <style>
+        :root {
+            --background: #ffffff;
+            --text: #333333;
+            --accent: #ff5e3a;
+            --secondary: #f5f5f5;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+            --header-bg: #ffffff;
+            --footer-bg: #f9f9f9;
+        }
+
+        .dark-theme {
+            --background: #181818;
+            --text: #f0f0f0;
+            --accent: #ff7e5f;
+            --secondary: #2a2a2a;
+            --card-bg: #252525;
+            --border: #3a3a3a;
+            --header-bg: #202020;
+            --footer-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            margin: 4rem 0;
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .mission, .vision {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .mission h2, .vision h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .team-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .team-member h3 {
+            color: var(--accent);
+        }
+
+        .team-member p {
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-cards, .mission-vision, .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Exoera</div>
+        <div class="theme-toggle">
+            <label for="theme-switch">Dark Mode</label>
+            <label class="switch">
+                <input type="checkbox" id="theme-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>About Exoera</h1>
+            <p>The Ultimate Talent Discovery Platform for the Film Industry</p>
+        </section>
+
+        <section class="about-section">
+            <h2 class="section-title">Who We Are</h2>
+            <p class="section-subtitle">Exoera is a revolutionary platform designed to bridge the gap between aspiring talents and the dynamic world of the film industry.</p>
+            
+            <div class="about-cards">
+                <div class="card">
+                    <h3>Our Story</h3>
+                    <p>Founded by industry professionals who understood the challenges of breaking into the film industry, Exoera was born from a desire to democratize access to opportunities. We believe that talent should be the only barrier to entry, not connections or geography.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>What We Do</h3>
+                    <p>We provide a seamless space for showcasing your skills and connecting with industry professionals looking for fresh talent. Whether you're a budding actor, director, scriptwriter, cinematographer, editor, or musician, Exoera is your gateway to the film industry.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>How We Help</h3>
+                    <p>Through our innovative platform, we enable talents to build comprehensive portfolios, connect with industry leaders, discover job opportunities, and collaborate with peers. We're not just a website; we're a community dedicated to nurturing the next generation of film industry professionals.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="mission-vision">
+            <div class="mission">
+                <h2>Our Mission</h2>
+                <p>To create a global ecosystem where talent thrives and finds its rightful place in the film industry, regardless of background or connections. We aim to be the bridge that connects passionate individuals with meaningful opportunities.</p>
+            </div>
+            
+            <div class="vision">
+                <h2>Our Vision</h2>
+                <p>A world where the film industry is accessible to all talented individuals, where creativity flourishes without barriers, and where the next generation of filmmakers, actors, and technicians can realize their full potential.</p>
+            </div>
+        </div>
+
+        <section class="team-section">
+            <h2 class="section-title">Meet Our Team</h2>
+            <p class="section-subtitle">The passionate individuals behind Exoera who are committed to transforming the film industry's talent discovery process.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="/api/placeholder/150/150" alt="Team Member">
+                    <h3>Sarah Johnson</h3>
+                    <p>Founder & CEO</p>
+                    <p>Former casting director with 15 years of experience in Hollywood</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="/api/placeholder/150/150" alt="Team Member">
+                    <h3>Michael Chen</h3>
+                    <p>Chief Technology Officer</p>
+                    <p>Tech innovator with a passion for the arts</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="/api/placeholder/150/150" alt="Team Member">
+                    <h3>Elena Rodriguez</h3>
+                    <p>Head of Talent Relations</p>
+                    <p>Award-winning producer and industry connector</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="/api/placeholder/150/150" alt="Team Member">
+                    <h3>David Okafor</h3>
+                    <p>Community Manager</p>
+                    <p>Film festival organizer and independent filmmaker</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Exoera. All rights reserved.</p>
+        <p>Connecting talent with opportunity in the film industry.</p>
+    </footer>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        
+        // Check for saved theme preference or use device preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.body.classList.add('dark-theme');
+            themeSwitch.checked = true;
+        }
+        
+        // Theme toggle functionality
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

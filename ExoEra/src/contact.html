@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        :root {
+            --primary-color: #4461F2;
+            --secondary-color: #6C7BF2;
+            --accent-color: #2C3ED7;
+            --text-color: #333333;
+            --text-light: #666666;
+            --background-color: #ffffff;
+            --card-background: #f9f9f9;
+            --border-color: #e0e0e0;
+            --success-color: #4CAF50;
+            --error-color: #f44336;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Dark theme variables */
+        .dark-theme {
+            --primary-color: #6C7BF2;
+            --secondary-color: #4461F2;
+            --accent-color: #7B88F3;
+            --text-color: #f0f0f0;
+            --text-light: #cccccc;
+            --background-color: #1a1a1a;
+            --card-background: #2a2a2a;
+            --border-color: #444444;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle .icon {
+            margin-right: 8px;
+        }
+
+        #toggle-text {
+            font-weight: 500;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            animation: fadeInLeft 0.5s ease-out both;
+        }
+
+        .contact-form {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            flex: 2;
+            min-width: 280px;
+            max-width: 700px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            animation: fadeInRight 0.5s ease-out both;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            background: rgba(68, 97, 242, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-details p {
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(68, 97, 242, 0.2);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            min-width: 150px;
+            display: inline-block;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Map container */
+        .map-container {
+            margin-top: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            animation: fadeInUp 0.5s ease-out 0.3s both;
+            background-color: var(--card-background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .dark-theme .map-placeholder {
+            background-color: #3a3a3a;
+        }
+
+        /* Animations */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info, .contact-form {
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">☀️</span>
+        <span id="toggle-text">Light Mode</span>
+    </div>
+
+    <header>
+        <h1>Get In Touch</h1>
+        <p class="tagline">We'd love to hear from you. Here's how you can reach us</p>
+    </header>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2 class="section-title">Contact Information</h2>
+            
+            <div class="contact-method">
+                <div class="contact-icon">📍</div>
+                <div class="contact-details">
+                    <h3>Our Location</h3>
+                    <p>123 Business Avenue, Suite 500<br>San Francisco, CA 94107</p>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">📱</div>
+                <div class="contact-details">
+                    <h3>Phone Number</h3>
+                    <p>+1 (555) 123-4567<br>Mon-Fri, 9AM-6PM PST</p>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-details">
+                    <h3>Email Address</h3>
+                    <p>support@yourcompany.com<br>info@yourcompany.com</p>
+                </div>
+            </div>
+            
+            <div class="social-media">
+                <div class="social-icon">f</div>
+                <div class="social-icon">in</div>
+                <div class="social-icon">𝕏</div>
+                <div class="social-icon">ig</div>
+            </div>
+        </div>
+        
+        <div class="contact-form">
+            <h2 class="section-title">Send Us a Message</h2>
+            
+            <form id="contactForm" onsubmit="submitForm(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone (optional)</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="" disabled selected>Select a subject</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="partnership">Partnership Opportunity</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <div class="map-placeholder">
+            Google Map Integration Would Appear Here
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                themeIcon.textContent = '☀️';
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.add('dark-theme');
+                themeIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+            }
+        };
+
+        // Form submission handling (demo only)
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // In a real implementation, you would send the form data to your server here
+            const formData = new FormData(event.target);
+            const formValues = Object.fromEntries(formData.entries());
+            
+            // For demo purposes, show an alert
+            alert('Form submitted successfully! We will contact you soon.');
+            
+            // Reset the form
+            document.getElementById('contactForm').reset();
+            
+            // Log form data to console (for demo purposes)
+            console.log('Form data:', formValues);
+        }
+    </script>
+</body>
+</html>

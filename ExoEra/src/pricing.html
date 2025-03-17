@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans</title>
+    <style>
+        :root {
+            --primary-color: #4461F2;
+            --secondary-color: #6C7BF2;
+            --accent-color: #2C3ED7;
+            --text-color: #333333;
+            --text-light: #666666;
+            --background-color: #ffffff;
+            --card-background: #f9f9f9;
+            --border-color: #e0e0e0;
+            --success-color: #4CAF50;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Dark theme variables */
+        .dark-theme {
+            --primary-color: #6C7BF2;
+            --secondary-color: #4461F2;
+            --accent-color: #7B88F3;
+            --text-color: #f0f0f0;
+            --text-light: #cccccc;
+            --background-color: #1a1a1a;
+            --card-background: #2a2a2a;
+            --border-color: #444444;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle .icon {
+            margin-right: 8px;
+        }
+
+        #toggle-text {
+            font-weight: 500;
+        }
+
+        .pricing-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-plan {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-light);
+        }
+
+        .billing-cycle {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .plan-description {
+            margin-bottom: 25px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .check-icon {
+            color: var(--success-color);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .cross-icon {
+            color: #ccc;
+            margin-right: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .cta-button.enterprise {
+            background-color: #333;
+        }
+
+        .cta-button.enterprise:hover {
+            background-color: #222;
+        }
+
+        /* Animation for cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pricing-plan:nth-child(1) {
+            animation: fadeInUp 0.5s ease-out 0.1s both;
+        }
+
+        .pricing-plan:nth-child(2) {
+            animation: fadeInUp 0.5s ease-out 0.2s both;
+        }
+
+        .pricing-plan:nth-child(3) {
+            animation: fadeInUp 0.5s ease-out 0.3s both;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-plan {
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="theme-icon">☀️</span>
+        <span id="toggle-text">Light Mode</span>
+    </div>
+
+    <header>
+        <h1>Choose Your Perfect Plan</h1>
+        <p class="tagline">Simple, transparent pricing that grows with your business</p>
+    </header>
+
+    <div class="pricing-container">
+        <!-- Basic Plan -->
+        <div class="pricing-plan">
+            <h2 class="plan-name">Basic</h2>
+            <div class="plan-price">$19<span>/mo</span></div>
+            <p class="billing-cycle">Billed annually or $24 month-to-month</p>
+            <p class="plan-description">Perfect for individuals and small projects getting started.</p>
+            <ul class="features-list">
+                <li><span class="check-icon">✓</span> Single user access</li>
+                <li><span class="check-icon">✓</span> 5 projects</li>
+                <li><span class="check-icon">✓</span> 20GB storage</li>
+                <li><span class="check-icon">✓</span> Basic support</li>
+                <li><span class="cross-icon">✕</span> Advanced analytics</li>
+                <li><span class="cross-icon">✕</span> Custom branding</li>
+                <li><span class="cross-icon">✕</span> API access</li>
+            </ul>
+            <button class="cta-button secondary">Get Started</button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="pricing-plan">
+            <div class="popular-badge">Popular</div>
+            <h2 class="plan-name">Professional</h2>
+            <div class="plan-price">$49<span>/mo</span></div>
+            <p class="billing-cycle">Billed annually or $59 month-to-month</p>
+            <p class="plan-description">Ideal for growing teams and businesses scaling up.</p>
+            <ul class="features-list">
+                <li><span class="check-icon">✓</span> Up to 5 users</li>
+                <li><span class="check-icon">✓</span> 20 projects</li>
+                <li><span class="check-icon">✓</span> 100GB storage</li>
+                <li><span class="check-icon">✓</span> Priority support</li>
+                <li><span class="check-icon">✓</span> Advanced analytics</li>
+                <li><span class="check-icon">✓</span> Custom branding</li>
+                <li><span class="cross-icon">✕</span> API access</li>
+            </ul>
+            <button class="cta-button">Subscribe Now</button>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="pricing-plan">
+            <h2 class="plan-name">Enterprise</h2>
+            <div class="plan-price">$99<span>/mo</span></div>
+            <p class="billing-cycle">Billed annually or $119 month-to-month</p>
+            <p class="plan-description">Full-featured solution for large organizations.</p>
+            <ul class="features-list">
+                <li><span class="check-icon">✓</span> Unlimited users</li>
+                <li><span class="check-icon">✓</span> Unlimited projects</li>
+                <li><span class="check-icon">✓</span> 1TB storage</li>
+                <li><span class="check-icon">✓</span> 24/7 dedicated support</li>
+                <li><span class="check-icon">✓</span> Advanced analytics</li>
+                <li><span class="check-icon">✓</span> Custom branding</li>
+                <li><span class="check-icon">✓</span> API access</li>
+            </ul>
+            <button class="cta-button enterprise">Contact Sales</button>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                themeIcon.textContent = '☀️';
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.add('dark-theme');
+                themeIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+            }
+        };
+
+        // Add hover animation for pricing plans
+        const pricingPlans = document.querySelectorAll('.pricing-plan');
+        
+        pricingPlans.forEach(plan => {
+            plan.addEventListener('mouseenter', () => {
+                plan.style.transform = 'translateY(-10px)';
+            });
+            
+            plan.addEventListener('mouseleave', () => {
+                plan.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

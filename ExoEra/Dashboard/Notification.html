@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exoera - Notifications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #F9A826;
+            --light-bg: #F8F9FA;
+            --light-text: #212529;
+            --dark-bg: #121212;
+            --dark-text: #E4E6EB;
+            --dark-card: #1E1E1E;
+            --light-card: #FFFFFF;
+            --dark-border: #333333;
+            --light-border: #E1E1E1;
+            --unread-light: #EDF2F7;
+            --unread-dark: #282828;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        body.dark-theme {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .dark-theme .header {
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle label {
+            margin-right: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .slider .moon {
+            display: none;
+            color: white;
+            position: absolute;
+            left: 10px;
+            top: 6px;
+            font-size: 15px;
+        }
+
+        .slider .sun {
+            color: #F9A826;
+            position: absolute;
+            right: 10px;
+            top: 6px;
+            font-size: 15px;
+        }
+
+        input:checked + .slider .moon {
+            display: block;
+        }
+
+        input:checked + .slider .sun {
+            display: none;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .notification-actions button {
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .notification-actions button:hover {
+            background-color: #534dff;
+        }
+
+        .notification-list {
+            margin-top: 20px;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            background-color: var(--light-card);
+            border: 1px solid var(--light-border);
+        }
+
+        .dark-theme .notification-item {
+            background-color: var(--dark-card);
+            border: 1px solid var(--dark-border);
+        }
+
+        .notification-item.unread {
+            background-color: var(--unread-light);
+        }
+
+        .dark-theme .notification-item.unread {
+            background-color: var(--unread-dark);
+        }
+
+        .notification-icon {
+            flex: 0 0 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .dark-theme .notification-message {
+            color: #AAAAAA;
+        }
+
+        .notification-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .dark-theme .notification-time {
+            color: #777;
+        }
+
+        .notification-actions-item {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .notification-actions-item button {
+            padding: 5px 10px;
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notification-actions-item button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .notification-actions-item button.secondary {
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .notification-actions-item button.secondary:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .notification-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-option {
+            padding: 8px 15px;
+            background-color: transparent;
+            border: 1px solid var(--light-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dark-theme .filter-option {
+            border: 1px solid var(--dark-border);
+        }
+
+        .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+            color: #888;
+        }
+
+        .dark-theme .empty-state {
+            color: #777;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .notification-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .notification-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .notification-filter {
+                overflow-x: auto;
+                width: 100%;
+                padding-bottom: 5px;
+            }
+
+            .filter-option {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Exoera</div>
+            <div class="theme-toggle">
+                <label>Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider">
+                        <i class="fas fa-moon moon"></i>
+                        <i class="fas fa-sun sun"></i>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="notification-header">
+            <h1>Notifications</h1>
+            <div class="notification-actions">
+                <button id="mark-all-read">Mark All Read</button>
+                <button id="clear-all">Clear All</button>
+            </div>
+        </div>
+
+        <div class="notification-filter">
+            <button class="filter-option active">All</button>
+            <button class="filter-option">Unread</button>
+            <button class="filter-option">Auditions</button>
+            <button class="filter-option">Projects</button>
+            <button class="filter-option">Network</button>
+            <button class="filter-option">System</button>
+        </div>
+
+        <div class="notification-list">
+            <!-- Unread notification -->
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">New Audition Opportunity</div>
+                    <div class="notification-message">
+                        You've been invited to audition for "The Last Horizon" directed by James Cameron. Please respond within 48 hours.
+                    </div>
+                    <div class="notification-time">2 hours ago</div>
+                    <div class="notification-actions-item">
+                        <button>View Details</button>
+                        <button class="secondary">Respond</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unread notification -->
+            <div class="notification-item unread">
+                <div class="notification-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">New Connection Request</div>
+                    <div class="notification-message">
+                        Sarah Johnson, Casting Director at Universal Studios, has sent you a connection request.
+                    </div>
+                    <div class="notification-time">5 hours ago</div>
+                    <div class="notification-actions-item">
+                        <button>Ignore</button>
+                        <button class="secondary">Accept</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read notification -->
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Profile Viewed</div>
+                    <div class="notification-message">
+                        Your profile has been viewed by 15 industry professionals in the last week. Update your portfolio to improve visibility.
+                    </div>
+                    <div class="notification-time">2 days ago</div>
+                    <div class="notification-actions-item">
+                        <button>View Profile</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read notification -->
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-comment"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">New Comment</div>
+                    <div class="notification-message">
+                        Michael Rodriguez commented on your showreel: "Great work! I love the dynamic range you showed in the dramatic scene."
+                    </div>
+                    <div class="notification-time">3 days ago</div>
+                    <div class="notification-actions-item">
+                        <button>View Comment</button>
+                        <button class="secondary">Reply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Check if user has previously selected dark mode
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Filter options
+        const filterOptions = document.querySelectorAll('.filter-option');
+        filterOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                filterOptions.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                // Filter logic would go here in a real application
+            });
+        });
+
+        // Mark all as read
+        document.getElementById('mark-all-read').addEventListener('click', () => {
+            const unreadItems = document.querySelectorAll('.notification-item.unread');
+            unreadItems.forEach(item => {
+                item.classList.remove('unread');
+            });
+        });
+
+        // Clear all notifications
+        document.getElementById('clear-all').addEventListener('click', () => {
+            const notificationList = document.querySelector('.notification-list');
+            notificationList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-bell-slash"></i>
+                    <h3>No notifications</h3>
+                    <p>You're all caught up! Check back later for new updates.</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
